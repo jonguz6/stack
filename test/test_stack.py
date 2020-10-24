@@ -3,10 +3,11 @@ from unittest import TestCase
 # Pytest
 # def test_do_something():
 #    pass
-from stack import Stack
+from stack import Stack, EmptyStackError, NotEnoughElements
 
 
 # unittest
+
 class TestStackOperations(TestCase):
     def setUp(self):
         self.stack = Stack()
@@ -53,4 +54,15 @@ class TestStackOperations(TestCase):
         self.assertEqual(self.stack.size, 0)
 
     def test_should_raise_when_called_pop_on_empty_stack(self):
-        self.assertRaises(IOError, self.stack.pop)
+        self.assertRaises(EmptyStackError, self.stack.pop)
+
+    def test_should_raise_when_multipop_called_with_number_bigger_than_stack_size(self):
+        self.assertRaises(NotEnoughElements, self.stack.multi_pop, 2)
+
+    def test_multi_pop_should_return_two_elements(self):
+        expected = [9, 8, 7, 6]
+        for elem in range(10):
+            self.stack.push(elem)
+
+        result = self.stack.multi_pop(4)
+        self.assertEqual(result, expected)
