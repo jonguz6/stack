@@ -1,3 +1,7 @@
+class EmptyStackError(Exception):
+    pass
+
+
 class Stack:
     def __init__(self):
         self._data = []
@@ -10,6 +14,8 @@ class Stack:
         self._data.append(element)
 
     def pop(self):
+        if not self._data:
+            raise EmptyStackError
         return self._data.pop()
 
     def peek(self):
